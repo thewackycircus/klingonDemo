@@ -3,7 +3,7 @@ const GAMEHEIGHT = 500;
 const GAMEWIDTH = 400;
 
 // world config
-var friction = .2;
+var friction = .98;
 
 // reference to game objects
 var playerShip_spr;

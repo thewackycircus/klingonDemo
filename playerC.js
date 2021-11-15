@@ -45,13 +45,23 @@ class Player extends Phaser.GameObjects.Sprite {
             this.xMove *= 0.98;
             this.yMove *= 0.98;
 
-            console.log(this.xMove, this.yMove);
-
             // applying calculated move to player object
             this.x += this.xMove;
             this.y += this.yMove;
+        }
 
-            console.log(this.x, this.y);
+        // if player has left side of screen
+        if (this.x > this.scene.game.config.width) {
+            this.x = 0;
+        } else if (this.x < 0) {
+            this.x = this.scene.game.config.width;
+        }
+
+        // if player has left top or bottom of screen
+        if (this.y > this.scene.game.config.height) {
+            this.y = 0;
+        } else if (this.y < 0) {
+            this.y = this.scene.game.config.height;
         }
 
         // is player firing?

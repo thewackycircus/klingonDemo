@@ -20,7 +20,7 @@ class Bullet extends Phaser.GameObjects.Sprite {
         this.y += this.yMove;
 
         // if bullet has left screen
-        if ( this.x > this.scene.game.width || this.x < 0 || this.y > this.scene.game.height || this.y < 0) {
+        if ( this.x > this.scene.game.config.width || this.x < 0 || this.y > this.scene.game.config.height || this.y < 0) {
             this.destroy();
         }
     }
