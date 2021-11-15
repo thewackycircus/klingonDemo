@@ -12,7 +12,7 @@ class Bullet extends Phaser.GameObjects.Sprite {
         this.yMove = this.speed * Math.sin(angleRad);
     }
 
-    // called regularly from main.js update function
+    // called regularly from playerC.js update function
     update() {
 
         // update position based upon initial calculations in constructor

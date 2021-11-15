@@ -2,6 +2,9 @@
 const GAMEHEIGHT = 500;
 const GAMEWIDTH = 400;
 
+// world config
+var friction = .2;
+
 // reference to game objects
 var playerShip_spr;
 var bullet_ary;
@@ -23,6 +26,7 @@ let game = new Phaser.Game(config);
 
 // called before game starts
 function preload() {
+
     // loading image assets
     this.load.image('ship_img', 'assets/ship.png');
     this.load.image('bullet_img', 'assets/bullet.png');
@@ -30,6 +34,7 @@ function preload() {
 
 // called when game starts
 function create() {
+
     // initializing player game object with arcade physcis body from 'existing' key word
     playerShip_spr = this.add.existing(new Player(this, 200, 200, "ship_img"));
     playerShip_spr.setScale(.5);
@@ -44,32 +49,18 @@ function create() {
 
 // update is called regularly by the Phaser game engine so can be used to update game
 function update() {
+
     // creating local container to store bullets in
     var bullet_ary;
 
-    // check for movement keys
-    if (cursors.left.isDown) {
-        playerShip_spr.rotation -= .1;
-    } else if (cursors.right.isDown) {
-        playerShip_spr.rotation += .1;
-    }
-
-    if (cursors.up.isDown) {
-        // move player forward in direction it is facing
-        playerShip_spr.x += playerShip_spr.speed * Math.cos(playerShip_spr.rotation);
-        playerShip_spr.y += playerShip_spr.speed * Math.sin(playerShip_spr.rotation);
-    }
-
-    // is player firing?
-    if (fireButton.isDown) {
-        playerShip_spr.fire(bulletGroup);
-    }
-    
     // populating bullet_ary with the children from the bulletGroup
     bullet_ary = bulletGroup.getChildren();
 
     // update bullets
-    for  (let bullet_spr of bullet_ary) {
+    for (let bullet_spr of bullet_ary) {
         bullet_spr.update();
     }
+
+    // update player
+    playerShip_spr.update();
 }

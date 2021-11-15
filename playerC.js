@@ -13,22 +13,64 @@ class Player extends Phaser.GameObjects.Sprite {
 
         // setting speed of player
         this.speed = 2;
+
+        // allow for player movement
+        this.xMove = 0;
+        this.yMove = 0;
     };
 
-    // called from main.js when player presses the fire button
-    fire(bulletGroup) { 
+    // called regularly from playerC.js update function
+    update() {
 
-        // store the rotation of the player Object
-        let angleRad = this.rotation;
+        // check for movement keys
+        if (cursors.left.isDown) {
+            this.rotation -= .1;
+        } else if (cursors.right.isDown) {
+            this.rotation += .1;
+        }
+
+        if (cursors.up.isDown) {
+            // storing calculated movement into container
+            this.xMove = this.speed * Math.cos(this.rotation);
+            this.yMove = this.speed * Math.sin(this.rotation);
+
+            // applying calculated move to player object
+            this.x += this.xMove;
+            this.y += this.yMove;
+        }
+        
+        // if not actively moving forward
+        else {
+            // applying friction to the movement
+            this.xMove *= 0.98;
+            this.yMove *= 0.98;
+
+            console.log(this.xMove, this.yMove);
+
+            // applying calculated move to player object
+            this.x += this.xMove;
+            this.y += this.yMove;
+
+            console.log(this.x, this.y);
+        }
+
+        // is player firing?
+        if (fireButton.isDown) {
+            this.fire(bulletGroup);
+        }
+    }
+
+    // called from main.js when player presses the fire button
+    fire(bulletGroup) {
 
         // finding the x and y pos of the nose, using the distance and angle of the player object
-        let startX = this.x + (this.noseOffset * Math.cos(angleRad));
-        let startY = this.y + (this.noseOffset * Math.sin(angleRad));
+        let startX = this.x + (this.noseOffset * Math.cos(this.rotation));
+        let startY = this.y + (this.noseOffset * Math.sin(this.rotation));
 
         // if enough time has passed
         if (this.scene.time.now > this.nextBulletTime) {
             // initializing new bullet into the bulletGroup to be accessed by main.js
-            bulletGroup.add(new Bullet(this.scene, startX, startY, "bullet_img", angleRad), true);
+            bulletGroup.add(new Bullet(this.scene, startX, startY, "bullet_img", this.rotation), true);
 
             // resetting nextBulletTime to hold the delay between bullets firing
             this.nextBulletTime = this.scene.time.now + this.fireDelay;
