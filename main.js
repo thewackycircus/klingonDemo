@@ -32,6 +32,7 @@ function preload() {
 function create() {
     // initializing player game object with arcade physcis body from 'existing' key word
     playerShip_spr = this.add.existing(new Player(this, 200, 200, "ship_img"));
+    playerShip_spr.setScale(.5);
 
     // adding some controls to play the game with
     cursors = this.input.keyboard.createCursorKeys();
@@ -51,6 +52,12 @@ function update() {
         playerShip_spr.rotation -= .1;
     } else if (cursors.right.isDown) {
         playerShip_spr.rotation += .1;
+    }
+
+    if (cursors.up.isDown) {
+        // move player forward in direction it is facing
+        playerShip_spr.x += playerShip_spr.speed * Math.cos(playerShip_spr.rotation);
+        playerShip_spr.y += playerShip_spr.speed * Math.sin(playerShip_spr.rotation);
     }
 
     // is player firing?

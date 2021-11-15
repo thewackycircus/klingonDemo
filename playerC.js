@@ -10,17 +10,20 @@ class Player extends Phaser.GameObjects.Sprite {
         // allow for delayt between firing
         this.nextBulletTime = 0;
         this.fireDelay = 200;
+
+        // setting speed of player
+        this.speed = 2;
     };
 
     // called from main.js when player presses the fire button
-    fire(bulletGroup) {
+    fire(bulletGroup) { 
 
         // store the rotation of the player Object
         let angleRad = this.rotation;
 
         // finding the x and y pos of the nose, using the distance and angle of the player object
         let startX = this.x + (this.noseOffset * Math.cos(angleRad));
-        let startY = this.y  +(this.noseOffset * Math.sin(angleRad));
+        let startY = this.y + (this.noseOffset * Math.sin(angleRad));
 
         // if enough time has passed
         if (this.scene.time.now > this.nextBulletTime) {
