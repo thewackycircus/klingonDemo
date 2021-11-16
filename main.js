@@ -45,6 +45,9 @@ function create() {
 
     // creating a container to store bullets in
     bulletGroup = this.add.group();
+
+    // initializing gravity well
+    gravityWell_spr = new GravityWell(this, 100, 100);
 }
 
 // update is called regularly by the Phaser game engine so can be used to update game
@@ -63,4 +66,7 @@ function update() {
 
     // update player
     playerShip_spr.update();
+
+    // update gravityWell
+    gravityWell_spr.update();
 }

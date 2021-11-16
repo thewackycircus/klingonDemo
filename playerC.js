@@ -17,6 +17,13 @@ class Player extends Phaser.GameObjects.Sprite {
         // allow for player movement
         this.xMove = 0;
         this.yMove = 0;
+
+        // allow for gravityWell affect
+        this.xOffset = 0;
+        this.yOffset = 0;
+
+        // setting collision size
+        this.collisionRadius = this.noseOffset;
     };
 
     // called regularly from playerC.js update function
@@ -34,16 +41,25 @@ class Player extends Phaser.GameObjects.Sprite {
             this.xMove = this.speed * Math.cos(this.rotation);
             this.yMove = this.speed * Math.sin(this.rotation);
 
+            // apply gravityWell affect
+            this.xMove += this.xOffset;
+            this.yMove += this.yOffset;
+
             // applying calculated move to player object
             this.x += this.xMove;
-            this.y += this.yMove;
+            this.y += this.yMove; 
         }
         
         // if not actively moving forward
         else {
+            
+            // apply gravityWell affect
+            this.xMove += this.xOffset;
+            this.yMove += this.yOffset;
+
             // applying friction to the movement
-            this.xMove *= 0.98;
-            this.yMove *= 0.98;
+            this.xMove *= 0.975;
+            this.yMove *= 0.975;
 
             // applying calculated move to player object
             this.x += this.xMove;
